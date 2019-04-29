@@ -1,5 +1,5 @@
 APP_NAME = mobile-security-service-operator
-ORG_NAME = aerogear
+ORG_NAME = damienomurchu
 PKG = github.com/$(ORG_NAME)/$(APP_NAME)
 TOP_SRC_DIRS = pkg
 PACKAGES ?= $(shell sh -c "find $(TOP_SRC_DIRS) -name \\*_test.go \
@@ -10,8 +10,8 @@ BIN_DIR := $(GOPATH)/bin
 BINARY ?= mobile-security-service-operator
 TAG= 0.1.0
 DEV= dev
-IMAGE_REGISTRY=quay.io
-REGISTRY_ORG=aerogear
+IMAGE_REGISTRY=docker.io
+REGISTRY_ORG=murchu
 REGISTRY_REPO=mobile-security-service-operator
 IMAGE_DEV_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):$(TAG)-$(DEV)
 IMAGE_LATEST_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):latest
