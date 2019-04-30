@@ -164,6 +164,11 @@ build-release:
 	@echo Building operator with the tag $(IMAGE_RELEASE_TAG):
 	operator-sdk build $(IMAGE_RELEASE_TAG)
 	
+.PHONY: build-latest
+build-latest:
+	@echo Building operator with the tag $(IMAGE_LATEST_TAG):
+	operator-sdk build $(IMAGE_LATEST_TAG)
+	
 .PHONY: push-dev
 publish-dev:
 	@echo Pushing operator with tag $(IMAGE_DEV_TAG) to $(REGISTRY_ORG)
@@ -180,6 +185,12 @@ push-release:
 	@echo Pushing operator with tag $(IMAGE_RELEASE_TAG) to $(REGISTRY_ORG)
 	@docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
 	docker push $(IMAGE_RELEASE_TAG)
+
+.PHONY: push-latest
+push-latest:
+	@echo Pushing operator with tag $(IMAGE_LATEST_TAG) to $(REGISTRY_ORG)
+	@docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
+	docker push $(IMAGE_LATEST_TAG)
 
 .PHONY: vet
 vet:
