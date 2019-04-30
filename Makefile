@@ -172,11 +172,13 @@ publish-dev:
 .PHONY: push-master
 push-master:
 	@echo Pushing operator with tag $(IMAGE_MASTER_TAG) to $(REGISTRY_ORG)
+	@docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
 	docker push $(IMAGE_MASTER_TAG)
 
 .PHONY: push-release
 push-release:
 	@echo Pushing operator with tag $(IMAGE_RELEASE_TAG) to $(REGISTRY_ORG)
+	@docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
 	docker push $(IMAGE_RELEASE_TAG)
 
 .PHONY: vet
