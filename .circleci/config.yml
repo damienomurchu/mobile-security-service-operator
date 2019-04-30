@@ -24,6 +24,7 @@ jobs:
       - image: circleci/golang:1.10
     steps:
       - checkout
+      - docker login -u="${QUAY_USERNAME}" -p="${QUAY_PASSWORD}" quay.io
       - run: 
         name: Install dep
         command: curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
@@ -43,6 +44,7 @@ jobs:
       - image: circleci/golang:1.10
     steps:
       - checkout
+      - docker login -u="${QUAY_USERNAME}" -p="${QUAY_PASSWORD}" quay.io
       - run: 
         name: Install dep
         command: curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
