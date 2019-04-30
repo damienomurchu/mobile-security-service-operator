@@ -18,7 +18,7 @@ jobs:
       - run: make test
       - run: make build_linux
 
-  docker_push_master:
+  image_push_master:
     working_directory: /go/src/github.com/aerogear/mobile-security-service-operator
     docker:
       - image: circleci/golang:1.10
@@ -37,7 +37,7 @@ jobs:
       - run: make build-master
       - run: make push-master
 
-  docker_release:
+  image_release:
     working_directory: /go/src/github.com/aerogear/mobile-security-service-operator
     docker:
       - image: circleci/golang:1.10
@@ -68,14 +68,14 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - docker_push_master:
+      - image_push_master:
           requires:
             - build
           filters:
             branches:
               only:
                 - master
-      - docker_release:
+      - image_release:
           requires:
             - build
           filters:

@@ -10,11 +10,13 @@ BIN_DIR := $(GOPATH)/bin
 BINARY ?= mobile-security-service-operator
 TAG= 0.1.0
 DEV= dev
-DOCKER-ORG=aerogear
-DOCKER-REPO=mobile-security-service-operator
-DOCKER_LATEST_TAG=docker.io/$(DOCKER-ORG)/$(DOCKER-REPO):latest
-DOCKER_MASTER_TAG=docker.io/$(DOCKER-ORG)/$(DOCKER-REPO):master
-DOCKER_RELEASE_TAG=docker.io/$(DOCKER-ORG)/$(DOCKER-REPO):$(TAG)
+IMAGE_REGISTRY=quay.io
+REGISTRY_ORG=aerogear
+REGISTRY_REPO=mobile-security-service-operator
+IMAGE_DEV_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):$(TAG)-$(DEV)
+IMAGE_LATEST_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):latest
+IMAGE_MASTER_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):master
+IMAGE_RELEASE_TAG=$(IMAGE_REGISTRY)/$(REGISTRY_ORG)/$(REGISTRY_REPO):$(TAG)
 
 # This follows the output format for goreleaser
 BINARY_LINUX_64 = ./dist/linux_amd64/$(BINARY)
@@ -149,33 +151,33 @@ delete-db-only:
 
 .PHONY: build-dev
 build-dev:
-	@echo Buinding operator with the tag $(TAG)-$(DEV):
-	operator-sdk build $(DOCKER-ORG)/$(DOCKER-REPO):$(TAG)-$(DEV)
+	@echo Building operator with the tag $(IMAGE_DEV_TAG):
+	operator-sdk build $(IMAGE_DEV_TAG)
 
 .PHONY: build-master
 build-master:
-	@echo Building operator with the tag $(DOCKER_MASTER_TAG):
-	operator-sdk build $(DOCKER_MASTER_TAG)
+	@echo Building operator with the tag $(IMAGE_MASTER_TAG):
+	operator-sdk build $(IMAGE_MASTER_TAG)
 
 .PHONY: build-release
 build-release:
-	@echo Building operator with the tag $(DOCKER_RELEASE_TAG):
-	operator-sdk build $(DOCKER_RELEASE_TAG)
+	@echo Building operator with the tag $(IMAGE_RELEASE_TAG):
+	operator-sdk build $(IMAGE_RELEASE_TAG)
 	
 .PHONY: push-dev
 publish-dev:
-	@echo Publishing operator in $(DOCKER-ORG)/$(DOCKER-REPO) with the tag $(TAG)-$(DEV):
-	docker push $(DOCKER-ORG)/$(DOCKER-REPO):$(TAG)-$(DEV)
+	@echo Pushing operator with tag $(IMAGE_DEV_TAG) to $(REGISTRY_ORG)
+	docker push $(IMAGE_DEV_TAG)
 
 .PHONY: push-master
 push-master:
-	@echo Publishing operator in $(DOCKER-ORG)/$(DOCKER-REPO) with the tag master:
-	docker push $(DOCKER_MASTER_TAG)
+	@echo Pushing operator with tag $(IMAGE_MASTER_TAG) to $(REGISTRY_ORG)
+	docker push $(IMAGE_MASTER_TAG)
 
 .PHONY: push-release
 push-release:
-	@echo Publishing operator in $(DOCKER-ORG)/$(DOCKER-REPO) with the tag $(TAG):
-	docker push $(DOCKER_RELEASE_TAG)
+	@echo Pushing operator with tag $(IMAGE_RELEASE_TAG) to $(REGISTRY_ORG)
+	docker push $(IMAGE_RELEASE_TAG)
 
 .PHONY: vet
 vet:
