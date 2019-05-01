@@ -193,6 +193,7 @@ push-latest:
 	@docker login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD)
 	docker push $(IMAGE_LATEST_TAG)
 
+
 .PHONY: vet
 vet:
 	@echo go vet
